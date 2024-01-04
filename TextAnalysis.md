@@ -26,7 +26,7 @@ import re
 
 We will be using two different datasets in this project - one to test the sentiment analysis library and show that it is working as intended, and one to perform actual sentiment analysis on social media posts to gain insight into the overall sentiment of Avengers Endgame on April 23rd, 2019, three days before its U.S. release.
 
-The datast we'll be using for testing the natural language toolkit is "Amazon Fine Food Reviews", published by Stanford Network Analysis Project to kaggle.com, located at https://www.kaggle.com/datasets/snap/amazon-fine-food-reviews. This dataset contains information from amazon reviews, which have a text review and a score from one to five stars. This is an important feature for testing our sentiment analysis, as it gives us a user reported numerical measurement to measure against our own scores, interpreted from the text. If these two scores are reasonably similar, then we can conclude that the nltk library is accurate enough for our purposes.
+The dataset we'll be using for testing the natural language toolkit is "Amazon Fine Food Reviews", published by Stanford Network Analysis Project to kaggle.com, located at https://www.kaggle.com/datasets/snap/amazon-fine-food-reviews. This dataset contains information from amazon reviews, which have a text review and a score from one to five stars. This is an important feature for testing our sentiment analysis, as it gives us a user-reported numerical measurement to measure against our own scores, interpreted from the text. If these two scores are reasonably similar, then we can conclude that the nltk library is accurate enough for our purposes.
 
 
 ```python
@@ -34,6 +34,9 @@ The datast we'll be using for testing the natural language toolkit is "Amazon Fi
 df = pd.read_csv('Reviews.csv')
 print(df.shape)
 ```
+
+    (2999, 10)
+    
 
 
 ```python
@@ -292,7 +295,7 @@ sia.polarity_scores(example)
 
 After running these examples, we can conclude that the scoring for the sentiment analysis is working properly. The first example was strongly positive, and resulted in a compound score of 0.65. The second example was strongly negative, and produced a compound score of -0.62. Therefore, we can see that the values are scored from -1 to 1, with negative scores being negative sentiments, 0 being neutral, and 1 being positive.
 
-When we input our earlier example text from the dataset, which states "This oatmeal is not good. Its mushy, soft, I don't like it. Quaker Oats is the way to go", we find that we recieve a compound score of -0.54, which is reasonably negative for such a bad review. Since it appears to be working well on these examples, we will now run the sentiment analysis on the entire dataset and save the values to a dataframe.
+When we input our earlier example text from the dataset, which states "This oatmeal is not good. Its mushy, soft, I don't like it. Quaker Oats is the way to go", we find that we receive a compound score of -0.54, which is reasonably negative for such a bad review. Since it appears to be working well on these examples, we will now run the sentiment analysis on the entire dataset and save the values to a dataframe.
 
 
 ```python
@@ -305,7 +308,7 @@ for i, row in tqdm(df.iterrows(), total=len(df)):
     result[myid] = sia.polarity_scores(text)
 ```
 
-    100%|██████████| 2999/2999 [00:02<00:00, 1426.63it/s]
+    100%|██████████| 2999/2999 [00:02<00:00, 1393.92it/s]
     
 
 
@@ -484,7 +487,7 @@ compound_graph.set_ylabel('Sentiment Score')
     
 
 
-The compound score, which we have graphed here on the y-axis, is an aggregation of the positive and negative scores for a statement and provides a measurement of the overall sentiment. As we can see from this plot, the compound scores seem to generally follow the number of stars a review has given a product, which is a good sign. For further anaysis, we can also check the positive, negative, and neutral scores to ensure they follow the star ratings as expected.
+The compound score, which we have graphed here on the y-axis, is an aggregation of the positive and negative scores for a statement and provides a measurement of the overall sentiment. As we can see from this plot, the compound scores seem to generally follow the number of stars a review has given a product, which is a good sign. For further analysis, we can also check the positive, negative, and neutral scores to ensure they follow the star ratings as expected.
 
 
 ```python
@@ -516,7 +519,7 @@ plt.show()
 
 The scores generally match the number of stars, as we would expect, and so we can conclude that this sentiment analysis is reasonably accurate, despite its shortcomings.
 
-Now that we have fully tested the sentiment of the dataset as a whole, we could choose to filter it and check the sentiments for specific criteria, such as reviews for certain items. However, since this dataset already had review scorings, that would provide little benefit over using the scores given by the review writers themselves. For a better use of this technology, we will run sentiment analysis on social media posts to gain an understanding of overall sentiment in a given community at a certain time.
+Now that we have fully tested the sentiment of the dataset as a whole, we could choose to filter it and check the sentiments for specific criteria, such as reviews for certain items. However, since this dataset already had review scores, that would provide little benefit over using the scores given by the review writers themselves. For a better use of this technology, we will run sentiment analysis on social media posts to gain an understanding of overall sentiment in a given community at a certain time.
 
 # Performing Sentiment Analysis on Twitter (X) Posts
 
@@ -700,7 +703,7 @@ for i, row in tqdm(tweets.iterrows(), total=len(tweets)):
     result2[myid] = sia.polarity_scores(text)
 ```
 
-    100%|██████████| 15000/15000 [00:03<00:00, 4710.67it/s]
+    100%|██████████| 15000/15000 [00:03<00:00, 4701.07it/s]
     
 
 
@@ -998,7 +1001,7 @@ plt.show()
 
 This word cloud is rather interesting, as we can quickly see the influence retweets have on the chosen words. "helloboon man", "everywhere", and "avengersendgame ads" seem to be very prominent, and that is because the phrase comes from a popular tweet containing the phrase "RT @HelloBoon: Man these #AvengersEndgame ads are everywhere https://t.co/Q0lNf5eJsX". The original tweet has over 70,000 retweets, which explains why it is so prevalent in the dataset. 
 
-Besdies the retweet content, we see a lot of discussion about Marvel superheroes, actors, and MCU, or the Marvel Cinematic Universe. We also note what appear to be ads for Funko Pops and BoxLunch, likely due to promotions or giveaways they ran relating to the movie, which often encourage people to retweet the post to enter the giveaway. The sentiment towards the movie seems to be generally positive here, with words like "ready", "win", and "favourite avenger", as well as discussion about famous actors very prevalent.
+Besides the retweet content, we see a lot of discussion about Marvel superheroes, actors, and MCU, or the Marvel Cinematic Universe. We also note what appear to be ads for Funko Pops and BoxLunch, likely due to promotions or giveaways they ran relating to the movie, which often encourage people to retweet the post to enter the giveaway. The sentiment towards the movie seems to be generally positive here, with words like "ready", "win", and "favourite avenger", as well as discussion about famous actors very prevalent.
 
 For thoroughness, we will also filter out only the original tweets (non-retweets), and view a word cloud of those as well to see if it differs significantly.
 
@@ -1051,7 +1054,7 @@ plt.show()
 
 Having filtered out the retweets, we see that the word cloud is similar, but clearly different from the first. There are more words revolving around times, being ready to watch the movie, and tickets, implying the posters are purchasing theater tickets and excited to view the movie soon.
 
-I found the inclusion of words like "tomorrow" especially interesting, since the movie was not released until April 26th in the U.S., and this data was collected on the 23rd. Looking into it further, I found that the movie was actually released on the 24th in Austrailia and the 25th in the U.K., implying that several of these tweets were excited Austrailian movie fans. 
+I found the inclusion of words like "tomorrow" especially interesting, since the movie was not released until April 26th in the U.S., and this data was collected on the 23rd. Looking into it further, I found that the movie was actually released on the 24th in Australia and the 25th in the U.K., implying that several of these tweets were excited Australian movie fans. 
 Aside from that, most of the words are as expected - revolving around the Avengers, movies, and Marvel.
 
 # Final Thoughts and Going Forward
